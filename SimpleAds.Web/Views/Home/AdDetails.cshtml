@@ -1,0 +1,53 @@
+﻿@using SimpleAds.Data
+@model SimpleAds.Web.Models.AdDetailsViewModel
+    
+
+<div class="row">
+    <div class="col-md-8 col-md-offset-2 well">
+        <div class="row">
+            <div class="col-md-8">
+                <h2>@Model.Ad.Title</h2>
+            </div>
+            <div class="col-md-2">
+                @if (Model.ShowDeleteButton)
+                {
+                    <form method="POST" action="/home/deletead">
+                        <input type="hidden" name="id" value="@Model.Ad.Id"/>
+                        <button class="btn btn-danger">Delete</button>
+                    </form>
+                }
+            </div>
+        </div>
+        @if (!string.IsNullOrEmpty(Model.Ad.Name))
+        {
+            <h5>Listed by @Model.Ad.Name</h5>
+        }
+        <h5>Listed on @Model.Ad.Date.ToLongDateString()</h5>
+        <p>
+            @Model.Ad.Description
+        </p>
+
+        <h4>Call lister at @Model.Ad.PhoneNumber</h4>
+        @if (Model.Ad.Images.Any())
+        {
+            foreach (Image image in Model.Ad.Images)
+            {
+                <img style="cursor: pointer;" class="thumb" src="/Images/@image.FileName" height="100"/>
+            }
+
+            <div style="text-align: center; margin-top: 20px;">
+                <img class="main" src="/Images/@Model.Ad.Images.First().FileName" height="500"/>
+            </div>
+        }
+        else
+        {
+            <img src="/Content/No_Image_Available.png" height="200"/>
+        }
+
+    </div>
+</div>
+
+@section scripts
+{
+    <script src="/Scripts/addetails.js"></script>
+}

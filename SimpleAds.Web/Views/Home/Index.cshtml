@@ -1,0 +1,31 @@
+﻿@using SimpleAds.Data
+@model SimpleAds.Web.Models.HomePageViewModel
+
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        @foreach (SimpleAd ad in Model.Ads)
+        {
+            <div class="well">
+                <a href="/home/addetails?adid=@ad.Id">
+                    <h3>@ad.Title</h3>
+                </a>
+                @if (!string.IsNullOrEmpty(ad.Name))
+                {
+                    <h5>Listed by @ad.Name</h5>
+                }
+                <h5>Listed on @ad.Date.ToLongDateString()</h5>
+                <div style="text-align: center;">
+                    @if (ad.Images.Any())
+                    {
+                        <img src="/Images/@ad.Images.First().FileName" height="200" />
+                    }
+                    else
+                    {
+                        <img src="/Content/No_Image_Available.png" height="200" />
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
